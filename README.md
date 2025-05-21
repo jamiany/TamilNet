@@ -3,7 +3,7 @@
 This repository builds upon the original [TamilNet project by Ganesh Manoharan](https://github.com/ganeshmm/TamilNet), a deep learning-based Tamil character recognition system.
 My work extends the original model as part of a school project focused on improving performance through architectural and data augmentation enhancements.
 
-I have achived an **test accuracy of 91.4 %** and a **validation accuracy of 97%**.
+I have achived an **test accuracy of 91.82 %** and a **validation accuracy of 98.11 %**.
 
 ## 🔍 Project Description
 
