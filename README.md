@@ -22,7 +22,7 @@ These enhancements help the model better learn rotational variations in handwrit
 
 * 🔁 **Data Augmentation**:
 
-  * Rotation from **-20° to +20°** in steps of 10°.
+  * Rotation from **-15° to +15°** in steps of 5°.
   * Implemented using `torchvision.transforms` pipeline for easy reproducibility.
 * 🧠 **Model Architecture Optimization**:
 
