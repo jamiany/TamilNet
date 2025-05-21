@@ -25,9 +25,22 @@ def url_to_img(dataURL):
 
     img_np = np.array(whiteBG.convert('L'))
     inverted = cv2.bitwise_not(img_np)
+
+    _, thresh = cv2.threshold(inverted, 10, 255, cv2.THRESH_BINARY)
+    coords = cv2.findNonZero(thresh)
+    x, y, w, h = cv2.boundingRect(coords)  # Get bounding box
+    cropped = inverted[y:y+h, x:x+w]
+
+    padding = 6
+    padded = cv2.copyMakeBorder(
+        cropped, padding, padding, padding, padding,
+        cv2.BORDER_CONSTANT, value=0
+    )
+    resized = cv2.resize(padded, (img_np.shape[1], img_np.shape[0]), interpolation=cv2.INTER_LINEAR)
+
     kernel = np.ones((2, 2), np.uint8)
     # eroded = cv2.erode(inverted, kernel, iterations=2)
-    dilated = cv2.dilate(inverted, kernel, iterations=2)
+    dilated = cv2.dilate(resized, kernel, iterations=2)
     opened = cv2.morphologyEx(dilated, cv2.MORPH_OPEN, kernel)
     closed = cv2.morphologyEx(opened, cv2.MORPH_CLOSE, kernel)
     blurred = cv2.GaussianBlur(closed, (7, 7), 0)
@@ -43,6 +56,7 @@ def transformImg(img):
 
 def get_prediction(url, net):
     img = url_to_img(url)
+    img.save('test.jpg')
     transformed = transformImg(img)
     output = net(transformed)
     output = nn.Softmax()(output)
